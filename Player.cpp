@@ -7,6 +7,9 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
+    playerPos.pos->x = 10;
+    playerPos.pos->y = 10;
+    playerPos.symbol = '@';
 }
 
 
