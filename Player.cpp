@@ -21,6 +21,8 @@ Player::~Player()
 void Player::getPlayerPos(objPos &returnPos) const
 {
     // return the reference to the playerPos arrray list
+    
+
 }
 
 void Player::updatePlayerDir()

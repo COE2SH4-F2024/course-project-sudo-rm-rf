@@ -2,9 +2,14 @@
 #include "MacUILib.h"
 #include "objPos.h"
 
+//Access the player class
+#include "Player.h"
+
 using namespace std;
 
 #define DELAY_CONST 100000
+
+Player *myPlayer; //Global pointer to instantiate a player object on the heap
 
 bool exitFlag;
 
@@ -40,6 +45,8 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
+    myPlayer = new Player(nullptr); //PLACEHOLDER POINTER
+
     exitFlag = false;
 }
 
@@ -55,7 +62,9 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();
+
+    MacUILib_printf("Player [x, y, sym] = [%d, %d, %c]\n", );    
 }
 
 void LoopDelay(void)
@@ -66,7 +75,9 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen(); 
+
+    delete myPlayer;   
 
     MacUILib_uninit();
 }
