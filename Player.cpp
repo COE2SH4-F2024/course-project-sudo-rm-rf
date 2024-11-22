@@ -7,8 +7,8 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-    playerPos.pos->x = 10;
-    playerPos.pos->y = 10;
+    playerPos.pos->x = mainGameMechsRef->getBoardSizeX() / 2;
+    playerPos.pos->y = mainGameMechsRef->getBoardSizeY() / 2;
     playerPos.symbol = '@';
 }
 
@@ -16,18 +16,53 @@ Player::Player(GameMechs* thisGMRef)
 Player::~Player()
 {
     // delete any heap members here
-}
-
-void Player::getPlayerPos(objPos &returnPos) const
-{
-    // return the reference to the playerPos arrray list
     
 
 }
 
-void Player::updatePlayerDir()
+objPos Player::getPlayerPos() const
 {
-        // PPA3 input processing logic          
+    // return the reference to the playerPos
+    
+    return playerPos;
+
+}
+
+void Player::updatePlayerDir()
+{       
+        char input = mainGameMechsRef->getInput();
+        // PPA3 input processing logic 
+        current = myFSMMode;  
+         switch(input)
+        {        
+            
+            case '.':
+                myFSMMode = STOP;
+                break;     
+            
+            case 'a':  
+                myFSMMode = LEFT;
+                break;
+
+            case 'd':  
+                myFSMMode = RIGHT;
+                break;
+
+            case 'w':  
+                myFSMMode = UP;
+                break;
+            
+            case 's':  
+                myFSMMode = DOWN;
+                break;
+            
+            default:
+                break;
+        }
+        if (3 - current == myFSMMode && myFSMMode != STOP)
+            {
+                myFSMMode = current;  
+    }        
 }
 
 void Player::movePlayer()
