@@ -1,5 +1,9 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
+
+//Time library for random seed
+#include <time.h>
+
 GameMechs::GameMechs()
 {
     input = ' ';
@@ -9,6 +13,9 @@ GameMechs::GameMechs()
 
     boardSizeX = 20;
     boardSizeY = 10;
+
+    //Random seed
+    srand(time(NULL));
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -20,6 +27,9 @@ GameMechs::GameMechs(int boardX, int boardY)
 
     boardSizeX = boardX;
     boardSizeY = boardY;
+
+    //Random seed
+    srand(time(NULL));
 }
 
 // do you need a destructor?
@@ -90,3 +100,34 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
+objPos GameMechs::generateRandomPosition() const
+{
+    int x = rand() % boardSizeX;
+    int y = rand() % boardSizeY;
+    return objPos(x, y, 'F'); // 'F' for food
+}
+
+bool GameMechs::isPositionValid(const objPos& position, const objPosArrayList* blockOff) const
+{
+    for(int i = 0; i < blockOff->getSize(); ++i)
+    {
+        if(blockOff->getElement(i).isPosEqual(&position))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void GameMechs::generateFood(const objPosArrayList* blockOff)
+{
+    do
+    {
+        food = generateRandomPosition();
+    }while (!isPositionValid(food, blockOff));
+}
+
+objPos GameMechs::getFoodPos() const
+{
+    return food;
+}

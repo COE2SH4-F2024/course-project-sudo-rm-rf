@@ -22,6 +22,10 @@ class GameMechs
 
         objPos food;
 
+        //Custom private helper methods
+        objPos generateRandomPosition() const;
+        bool isPositionValid(const objPos& position, const objPosArrayList* blockOff) const;
+
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
@@ -43,6 +47,9 @@ class GameMechs
         void incrementScore();
         
         // More methods should be added here
+        void generateFood(const objPosArrayList* blockOff);
+        objPos getFoodPos() const;
+
 };
 
 #endif
