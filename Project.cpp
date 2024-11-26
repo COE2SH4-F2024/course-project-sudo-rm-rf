@@ -58,14 +58,15 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    
+    myPlayer->updatePlayerDir();
+    myPlayer->movePlayer();
 }
 
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
 
-    MacUILib_printf("Player [x, y, sym] = [%d, %d, %c]\n" );    
+    
 }
 
 void LoopDelay(void)

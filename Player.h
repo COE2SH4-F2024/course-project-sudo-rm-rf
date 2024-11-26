@@ -16,8 +16,6 @@ class Player
     
     public:
         enum Dir {LEFT, DOWN, UP, RIGHT, STOP};  // This is the direction state
-        enum Dir myFSMMode;
-        enum Dir current;
         Player(GameMechs* thisGMRef);
         ~Player();
 
@@ -26,10 +24,12 @@ class Player
         void movePlayer();
 
         // More methods to be added here
+        const objPosArrayList& getSnakeBody() const; // Getter for snakeBody
 
     private:
         objPos playerPos; // Upgrade this in iteration 3.       
         enum Dir myDir;
+        objPosArrayList snakeBody; //Array to store snake body positions
 
         // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;
