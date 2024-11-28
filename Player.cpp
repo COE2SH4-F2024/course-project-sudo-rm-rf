@@ -70,50 +70,34 @@ void Player::updatePlayerDir()
 
 void Player::movePlayer()
 {
-    // PPA3 Finite myDir Machine logic
-    // Get the current head position
-    objPos head = snakeBody.getHeadElement();
-
-    //Calculate the new head position based on the current direction
-    switch(myDir)
-    {
-        case LEFT:
-            head.pos->x -= 1;
-            break;
-        case RIGHT:
-            head.pos->x += 1;
-            break;
-        case UP:
-            head.pos->y -= 1;
-            break;
-        case DOWN:
-            head.pos->y += 1;
-            break;
-        default:
-            break;
-    }
-
-    //Insert the new head position at the head of the snake body
-    snakeBody.insertHead(head);
-
-    //Remove the tail position to simulate movement
-    snakeBody.removeTail();
-
-    //Border wraparound
-    int boardSizeX = mainGameMechsRef->getBoardSizeX();
-    int boardSizeY = mainGameMechsRef->getBoardSizeY();
-
-    if(head.pos->x < 0){
-        head.pos->x = boardSizeX - 1;
-    }
-    else if(head.pos->x >= boardSizeX){
-        head.pos->x = 0;
-    }
-    if(head.pos->y < 0){
-        head.pos->y = boardSizeY - 1;
-    }
-    else if(head.pos->y >= boardSizeY){
-        head.pos->y = 0;
+    // PPA3 Finite State Machine logic
+    if(myDir != STOP){
+        switch(myDir){
+            case UP:
+                if(playerPos.pos->y == 0)
+                    playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 1;
+                else
+                    playerPos.pos->y--;
+                break;
+            case DOWN:
+                if(playerPos.pos->y == mainGameMechsRef->getBoardSizeY() - 1)
+                    playerPos.pos->y = 0;
+                else
+                    playerPos.pos->y++;
+                break;
+            case LEFT:
+                if(playerPos.pos->x == 0)
+                    playerPos.pos->x = mainGameMechsRef->getBoardSizeX() - 1;
+                else
+                    playerPos.pos->x--;
+                break;
+            case RIGHT:
+                if(playerPos.pos->x == mainGameMechsRef->getBoardSizeX() - 1)
+                    playerPos.pos->x = 0;
+                else
+                    playerPos.pos->x++;
+                break;
+        }
     }
 }
 

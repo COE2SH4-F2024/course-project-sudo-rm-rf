@@ -27,7 +27,7 @@ int main(void)
 
     Initialize();
 
-    while(myGM->getExitFlagStatus() == false)
+    while(exitFlag == false)
     {
         GetInput();
         RunLogic();
@@ -46,14 +46,18 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     myGM = new GameMechs(); 
-    myPlayer = new Player(nullptr); //PLACEHOLDER POINTER
+    myPlayer = new Player(myGM);
 
     exitFlag = false;
 }
 
 void GetInput(void)
 {
-   
+    if(MacUILib_hasChar())
+    {
+        char input = MacUILib_getChar();
+        myGM->setInput(input);
+    }
 }
 
 void RunLogic(void)
@@ -65,8 +69,32 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
+        int hasObject = 0;
 
-    
+    MacUILib_clearScreen();
+    int i,j;
+    for(i=0;i<myGM->getBoardSizeX()+2;i++){
+        MacUILib_printf("#");
+    }
+    MacUILib_printf("\n");
+
+
+    for(i=0;i<myGM->getBoardSizeY();i++){
+            MacUILib_printf("#");
+        for(j=0; j<myGM->getBoardSizeX();j++){
+            if(j == (myPlayer->getPlayerPos().pos->x) && i == (myPlayer->getPlayerPos().pos->y)){
+                MacUILib_printf("%c", myPlayer->getPlayerPos().getSymbol());
+            }
+            else{
+                MacUILib_printf(" ");
+            }
+        }
+        MacUILib_printf("#\n");
+    }
+    for(i=0;i<myGM->getBoardSizeX()+2;i++){
+        MacUILib_printf("#");
+    }
+    MacUILib_printf("\n");
 }
 
 void LoopDelay(void)
