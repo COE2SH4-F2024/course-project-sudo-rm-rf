@@ -20,19 +20,16 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
-        objPos food;
-
         //Custom private helper methods
-        objPos generateRandomPosition() const;
-        bool isPositionValid(const objPos& position, const objPosArrayList* blockOff) const;
 
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
-        ~GameMechs(); // is this one needed at all? Why or why not?
+        //Do not need a destructor since there is nothing on the heap to delete
         
         bool getExitFlagStatus() const; 
         void setExitTrue();
+
         bool getLoseFlagStatus() const;
         void setLoseFlag();
 
@@ -47,9 +44,6 @@ class GameMechs
         void incrementScore();
         
         // More methods should be added here
-        void generateFood(const objPosArrayList* blockOff);
-        objPos getFoodPos() const;
-
 };
 
 #endif

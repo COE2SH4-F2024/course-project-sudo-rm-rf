@@ -32,11 +32,7 @@ GameMechs::GameMechs(int boardX, int boardY)
     srand(time(NULL));
 }
 
-// do you need a destructor?
-GameMechs::~GameMechs()
-{
-    //No memory to delete
-}
+//Do not need a destructor since there is nothing on the heap to delete
 
 bool GameMechs::getExitFlagStatus() const
 {
@@ -100,34 +96,3 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
-objPos GameMechs::generateRandomPosition() const
-{
-    int x = rand() % boardSizeX;
-    int y = rand() % boardSizeY;
-    return objPos(x, y, 'F'); // 'F' for food
-}
-
-bool GameMechs::isPositionValid(const objPos& position, const objPosArrayList* blockOff) const
-{
-    for(int i = 0; i < blockOff->getSize(); ++i)
-    {
-        if(blockOff->getElement(i).isPosEqual(&position))
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-void GameMechs::generateFood(const objPosArrayList* blockOff)
-{
-    do
-    {
-        food = generateRandomPosition();
-    }while (!isPositionValid(food, blockOff));
-}
-
-objPos GameMechs::getFoodPos() const
-{
-    return food;
-}
