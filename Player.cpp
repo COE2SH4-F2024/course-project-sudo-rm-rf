@@ -99,41 +99,55 @@ void Player::movePlayer()
     for (i = 0; i < tempFoodList->getSize(); i++) {
         tempFoodPos = tempFoodList->getElement(i);
 
-        //Normal food condition
+        // Normal food condition
         if (currentHead.isPosEqual(&tempFoodPos) && tempFoodPos.getSymbol() == 'X') {
-            //Regenerate food item
+            // Regenerate food item
             foodRef->generateFood(playerPosList);
-            //Increment score by 1 for each added element
+            // Increment score by 1 for each added element
             mainGameMechsRef->incrementScore();
             collided = true;
             break;
         } 
 
-        //Special food increases score by 5, but does not increase size
+        // Special food '$' condition (gives 10 points, no size increase)
         else if (currentHead.isPosEqual(&tempFoodPos) && tempFoodPos.getSymbol() == '$') {
-            //Regenerating food item
+            // Regenerating food item
             foodRef->generateFood(playerPosList);
-            //Increment score by 1 for each added element
-            int i;
-            for (i = 0; i < 5; i++) {
+            // Increment score by 5 for each special food eaten
+            int j;
+            for (j = 0; j < 5; j++) {
                 mainGameMechsRef->incrementScore();
             }
             playerPosList->removeHead();
             collided = true;
             break;
         }
-    }
-    
 
-    //Else statement to remove tail only when there's no collision
+        // Special food '*' condition (gives 50 points, increases snake length)
+        else if (currentHead.isPosEqual(&tempFoodPos) && tempFoodPos.getSymbol() == '*') {
+            // Regenerate food item
+            foodRef->generateFood(playerPosList);
+            // Increment score by 50 for each '*' food eaten
+            for (i=0; i < 100; i++){
+                mainGameMechsRef->incrementScore();
+            }
+            // Increase snake length by 10
+            for (i=0;i<10;i++){
+                playerPosList->insertTail(playerPosList->getTailElement()); // Adds 10 new segments to the tail of the snake
+            }
+            collided = true;
+            break;
+        }
+    }
+
+    // Remove tail only when there's no collision
     if (!collided){
-        //Remove tail element
         playerPosList->removeTail();
     }
 
-    //If statement to check collision status
+    // Check if there was self-collision
     if(checkSelfCollision()){
-        //Setting both exit and lose flag true when self collision is true
+        // Setting both exit and lose flag true when self collision is true
         mainGameMechsRef->setExitTrue();
         mainGameMechsRef->setLoseFlag();
     }
