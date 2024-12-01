@@ -127,7 +127,7 @@ void Player::movePlayer()
         else if (currentHead.isPosEqual(&tempFoodPos) && tempFoodPos.getSymbol() == '*') {
             // Regenerate food item
             foodRef->generateFood(playerPosList);
-            // Increment score by 50 for each '*' food eaten
+            // Increment score by 100 for each '*' food eaten
             for (i=0; i < 100; i++){
                 mainGameMechsRef->incrementScore();
             }
