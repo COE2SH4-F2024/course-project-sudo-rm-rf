@@ -190,15 +190,21 @@ void CleanUp(void)
 {
     MacUILib_clearScreen(); 
 
+    // Display Game Over message
     if (myGM->getLoseFlagStatus()) {
-        MacUILib_printf("Game Over! You lost. Try again, maybe you'll get a higher score!\n");
-    } else {
-        MacUILib_printf("Thanks for playing, goodybe!\n");
+        MacUILib_printf("Game Over! Try again for a higher score!\n");
+    } else if (myGM->getExitFlagStatus()) {
+        MacUILib_printf("Game Over! You exited the game.\n");
     }
 
-    delete myPlayer;   
+    // Display final score
+    MacUILib_printf("Your final score: %d\n", myGM->getScore());
+
+    // Clean up allocated resources
+    delete myPlayer;
     delete myGM;
     delete foodObj;
 
     MacUILib_uninit();
 }
+
